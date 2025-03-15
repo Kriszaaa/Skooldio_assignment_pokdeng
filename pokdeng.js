@@ -4,9 +4,12 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+
+const card_type = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
+const card_number = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']
 // Function to draw card
 // Random select card type and card number
-function Drawcard(card_type , card_number , used_card) {
+function Drawcard(used_card) {
     let type = card_type[Math.floor(Math.random() * card_type.length)];
     let number = card_number[Math.floor(Math.random() * card_number.length)];
 
@@ -32,8 +35,6 @@ let chips = 0
 // start game function
 function StartGame(){
     console.log("Please put your bet");
-    let card_type = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
-    let card_number = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']
 
     // store used card from both player and dealer
     used_card = []
@@ -41,19 +42,19 @@ function StartGame(){
         // initialize player and dealer score
         player_score = 0
         dealer_score = 0
-        
+
         // player draw 2 card sequentially
-        card1 = Drawcard(card_type , card_number , used_card)
+        card1 = Drawcard(used_card)
         used_card.push(card1[0]+'-'+card1[1])
-        card2 = Drawcard(card_type , card_number , used_card)
+        card2 = Drawcard(used_card)
         used_card.push(card2[0]+'-'+card2[1])    
         player_score = Scoring(card1[1]) + Scoring(card2[1])
         console.log('You got ' + card1[0]+'-'+card1[1] + ', ' + card2[0]+'-'+card2[1])
 
         // dealer draw 2 card sequentially, after player
-        dealer_card1 = Drawcard(card_type , card_number , used_card)
+        dealer_card1 = Drawcard(used_card)
         used_card.push(dealer_card1[0]+'-'+dealer_card1[1])
-        dealer_card2 = Drawcard(card_type , card_number , used_card)
+        dealer_card2 = Drawcard(used_card)
         used_card.push(dealer_card2[0]+'-'+dealer_card2[1])    
         dealer_score = Scoring(dealer_card1[1]) + Scoring(dealer_card2[1])
         console.log('The dealer got '  + dealer_card1[0]+'-'+dealer_card1[1] + ', ' + dealer_card2[0]+'-'+dealer_card2[1])
