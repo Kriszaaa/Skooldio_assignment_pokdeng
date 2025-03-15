@@ -11,7 +11,7 @@ function Drawcard(card_type , card_number , used_card) {
     let number = card_number[Math.floor(Math.random() * card_number.length)];
 
     // If the random card is already used, random again
-    while (used_card.length > 0 && used_card.includes(type + '-' + number)){
+    while (used_card.includes(type + '-' + number)){
         type = card_type[Math.floor(Math.random() * card_type.length)];
         number = card_number[Math.floor(Math.random() * card_number.length)];
     }
@@ -19,12 +19,12 @@ function Drawcard(card_type , card_number , used_card) {
 }
 // scoring function
 function Scoring(card){
-    if(card[1] == 'Ace'){
+    if(card == 'Ace'){
         return 1
-    }else if(card[1] == 'Jack' || card[1] == 'Queen' || card[1] == 'King'){
+    }else if(card == 'Jack' || card == 'Queen' || card == 'King' || card == '10'){
         return 0
     }else{
-        return parseInt(card[1])
+        return parseInt(card)
     }
 }
 
@@ -41,20 +41,23 @@ function StartGame(){
         // initialize player and dealer score
         player_score = 0
         dealer_score = 0
+        
         // player draw 2 card sequentially
         card1 = Drawcard(card_type , card_number , used_card)
         used_card.push(card1[0]+'-'+card1[1])
         card2 = Drawcard(card_type , card_number , used_card)
         used_card.push(card2[0]+'-'+card2[1])    
-        player_score = Scoring(card1) + Scoring(card2)
+        player_score = Scoring(card1[1]) + Scoring(card2[1])
         console.log('You got ' + card1[0]+'-'+card1[1] + ', ' + card2[0]+'-'+card2[1])
+
         // dealer draw 2 card sequentially, after player
         dealer_card1 = Drawcard(card_type , card_number , used_card)
         used_card.push(dealer_card1[0]+'-'+dealer_card1[1])
         dealer_card2 = Drawcard(card_type , card_number , used_card)
         used_card.push(dealer_card2[0]+'-'+dealer_card2[1])    
-        dealer_score = Scoring(dealer_card1) + Scoring(dealer_card2)
+        dealer_score = Scoring(dealer_card1[1]) + Scoring(dealer_card2[1])
         console.log('The dealer got '  + dealer_card1[0]+'-'+dealer_card1[1] + ', ' + dealer_card2[0]+'-'+dealer_card2[1])
+
         // compare the score
         if(player_score > dealer_score){
             console.log('You won!!, received ' + bet + ' chips')
